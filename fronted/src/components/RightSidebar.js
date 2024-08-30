@@ -26,7 +26,7 @@ const RightSidebar = () => {
               <div className='flex'>
                 <Avatar src={user.avatarUrl} size="36" round={true} />
                 <div className='ml-2'>
-                  <h1 className='font-bold'>{user.name}</h1>
+                 <h1 className='font-bold'>{user.name}</h1>
                   <p className='text-sm'>@{user.username}</p>
                 </div>
               </div>

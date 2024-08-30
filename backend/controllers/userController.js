@@ -168,53 +168,78 @@ export const getOtherUsers = async (req, res) => {
   
 
 
-export const follow = async (req,res) => {
-try {
-    const loggedInUserId = req.body.id;
-    const userId = req.params.id;
-    const loggedInUser = await User.findById(loggedInUserId);
-    const user = await User.findById(userId);
-    if(!user.followers.includes(loggedInUserId)){
-        await user.updateOne({$push:{followers:loggedInUserId}});
-        await loggedInUser.updateOne({$push:{following:userId}});
-    }else{
-        return res.status(400).json({
-            message:`user already following to ${user.name}`
-        })
-    };
-    return res.status(200).json({
-        message:`followed ${user.name}`,
-        success:true
-    })
-    
-} catch (error) {
-    console.log(error);
-    
-}
-};
-
-
-export const unfollow = async ( req, res ) => {
+  export const follow = async (req, res) => {
     try {
-        const loggedInUserId = req.body.id;
-        const userId = req.params.id;
-        const loggedInUser = await User.findById(loggedInUserId);
-        const user = await User.findById(userId);
-        if(loggedInUser.following.includes(userId)){
-            await user.updateOne({$pull:{followers:loggedInUserId}});
-            await loggedInUser.updateOne({$pull:{following:userId}});
-        }else{
-            return res.status(400).json({
-                message:`user not following to ${user.name}`
-            })
-        };
+      const loggedInUserId = req.body.id; 
+      const userId = req.params.id; 
+  
+      const loggedInUser = await User.findById(loggedInUserId);
+      const user = await User.findById(userId);
+  
+     
+      if (!loggedInUser || !user) {
+        return res.status(404).json({
+          message: 'User not found', 
+        });
+      }
+  
+      if (!user.followers.includes(loggedInUserId)) {
+        await user.updateOne({ $push: { followers: loggedInUserId } });
+        await loggedInUser.updateOne({ $push: { following: userId } });
+  
         return res.status(200).json({
-            message:`${loggedInUser.name} unfollowed ${user.name}`,
-            success:true
-        })
-        
+          message: `Followed ${user.name}`, 
+          success: true,
+        });
+      } else {
+        return res.status(400).json({
+          message: `User is already following ${user.name}`, 
+        });
+      }
     } catch (error) {
-        console.log(error);
-        
+      console.error(error);
+      return res.status(500).json({
+        message: 'Server error', 
+      });
     }
-}
+  };
+  
+
+
+export const unfollow = async (req, res) => {
+    try {
+      const loggedInUserId = req.body.id; 
+      const userId = req.params.id; 
+  
+      const loggedInUser = await User.findById(loggedInUserId);
+      const user = await User.findById(userId);
+  
+   
+      if (!loggedInUser || !user) {
+        return res.status(404).json({
+          message: 'User not found', 
+        });
+      }
+  
+     
+      if (loggedInUser.following.includes(userId)) {
+        await user.updateOne({ $pull: { followers: loggedInUserId } });
+        await loggedInUser.updateOne({ $pull: { following: userId } });
+  
+        return res.status(200).json({
+          message: `Unfollowed ${user.name}`, 
+          success: true,
+        });
+      } else {
+        return res.status(400).json({
+          message: `User is not following ${user.name}`, 
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: 'Server error', 
+      });
+    }
+  };
+  
