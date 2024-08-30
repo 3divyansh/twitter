@@ -5,7 +5,7 @@ import { USER_API_END_POINT } from "../utils/constant.js";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUser } from "../redux/actionTypes.js";
-import { ClipLoader } from "react-spinners"; // Import the spinner
+import { ClipLoader } from "react-spinners"; 
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,13 +18,13 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const changeHandler = (e) => {
-    const { name, value } = e.target;
-    if (name === "name") setName(value);
-    if (name === "username") setUsername(value);
-    if (name === "email") setEmail(value);
-    if (name === "password") setPassword(value);
-  };
+  // const changeHandler = (e) => {
+  //   const { name, value } = e.target;
+  //   if (name === "name") setName(value);
+  //   if (name === "username") setUsername(value);
+  //   if (name === "email") setEmail(value);
+  //   if (name === "password") setPassword(value);
+  // };
 
   const submitHandler = async (e) => {
     e.preventDefault();

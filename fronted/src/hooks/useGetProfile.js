@@ -14,15 +14,16 @@ const useGetProfile = () => {
     useEffect(() => {
         if (!id) return;
       const fetchProfile =  (id) => {
-        console.log(fetchProfile,"inside user get profile")
         return async dispatch =>{
             try {
                 const res = await axios.get(`${USER_API_END_POINT}/profile/${id}`, {
-                    withCredentials: true
+                    withCredentials: true,
                 });
-                dispatch(getMyProfile(res.data.user));
-                        dispatch(GET_USER(res.data.user));
-                           setProfile(res.data.user);
+                if (res.data && res.data.user) {
+                    dispatch(getMyProfile(res.data.user));
+                    dispatch(GET_USER(res.data.user));
+                       setProfile(res.data.user);
+                }
             } catch (error) {
                 setError(error);
             }

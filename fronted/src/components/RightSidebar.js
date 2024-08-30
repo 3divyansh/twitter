@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { CiSearch } from "react-icons/ci";
 import Avatar from 'react-avatar';
 import useOtherUser from '../hooks/useOtherUser';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const RightSidebar = () => {
   const { id } = useParams(); 
@@ -24,11 +24,14 @@ const RightSidebar = () => {
           otherUsers.map((user, index) => (
             <div key={index} className='flex items-center justify-between my-2'>
               <div className='flex'>
-                <Avatar src={user.avatarUrl} size="36" round={true} />
+                <Avatar src={user.avatarUrl } size="36" round={true} />
+                <Link  to={`/profile/${user?._id}`} className='ml-2'>
                 <div className='ml-2'>
                  <h1 className='font-bold'>{user.name}</h1>
                   <p className='text-sm'>@{user.username}</p>
                 </div>
+                </Link>
+               
               </div>
               <button className='px-2 py-1 bg-black text-white rounded-full'>Follow</button>
             </div>
