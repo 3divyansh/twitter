@@ -10,17 +10,19 @@ import { fetchUserProfile } from '../redux/action';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.user.user);
-  const { user } = useGetProfile();
+  const userId = useSelector((state) => state.user.user);
+  const { user } = useGetProfile(userId);
+
+ 
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchUserProfile(id));
+    if (userId) {
+      dispatch(fetchUserProfile(userId));
     }
-  }, [id, dispatch]);
+  }, [userId, dispatch]);
   
 
-  if (!id) return <div>Loading...</div>;
+  if (!userId) return <div>Loading...</div>;
 
   return (
     <div className='w-[50%] border-l border-r border-gray-400'>
@@ -30,7 +32,7 @@ const Profile = () => {
             <IoMdArrowBack size="22px"/>
           </Link>
           <div className='ml-2'>
-            <h1 className='font-bold text-lg'>{id.username}</h1>
+            <h1 className='font-bold text-lg'>{userId.username}</h1>
             <p className='text-gray-500 text-sm'>10 Post</p>
           </div>
         </div>
@@ -42,8 +44,8 @@ const Profile = () => {
           <button className='px-4 py-1 hover:bg-gray-200 rounded-full text-right border border-gray-400'>Edit profile</button>
         </div>
         <div className='m-4'>
-          <h1 className='font-bold text-xl'>{id.name}</h1>
-          <p>{`@${id.username}`}</p>
+          <h1 className='font-bold text-xl'>{userId.name}</h1>
+          <p>{`@${userId.username}`}</p>
         </div>
         <div className='m-4 text-sm'>
           <p>

@@ -7,7 +7,7 @@ import { getOtherUsers } from "../redux/actionTypes";
 const useOtherUser = () => {
   const dispatch = useDispatch();
   const id = useSelector((state) => state.user.user);
-  const [otherUsers, setOtherUsers] = useState([]);
+  const [otherUsers, setOtherUsers] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -35,3 +35,6 @@ const useOtherUser = () => {
 };
 
 export default useOtherUser;
+
+
+
