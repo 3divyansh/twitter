@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {configureStore,combineReducers} from "@reduxjs/toolkit";
 import userSlice from "./userSlice";
 import tweetSlice from "./tweetSlice";
@@ -36,3 +37,22 @@ const store = configureStore({
     }),
 });
 export default store;
+=======
+import { configureStore } from '@reduxjs/toolkit';
+import userReducer from './userSlice';
+import { thunk } from 'redux-thunk';
+
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+  },
+  devTools: process.env.NODE_ENV === 'development',
+  middleware :  getDefaultMiddleware =>
+    getDefaultMiddleware({
+      thunk: {thunk
+ }
+    })
+});
+
+export default store;
+>>>>>>> 66a8da562c72f88f0001ca243fee372784c35896

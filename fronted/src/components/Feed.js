@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import CreatePost from './CreatePost.js'
 import Tweet from './Tweet.js'
@@ -19,4 +20,19 @@ const Feed = () => {
   )
 }
 
+=======
+import React from 'react'
+import CreatePost from './CreatePost'
+
+const Feed = () => {
+  return (
+    <div className='w-[50%] border border-gray-200'>
+      <div>
+        <CreatePost />
+      </div>
+    </div>
+  )
+}
+
+>>>>>>> 66a8da562c72f88f0001ca243fee372784c35896
 export default Feed

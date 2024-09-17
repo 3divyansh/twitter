@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export const USER_API_END_POINT="http://localhost:5050/api/v1/user";
 export const TWEET_API_END_POINT="http://localhost:5050/api/v1/tweet";
 
@@ -27,3 +28,7 @@ export const timeSince = (timestamp) => {
         }
     }
 }
+=======
+export const USER_API_END_POINT="http://localhost:5050/api/v1/user";
+export const TWEET_API_END_POINT="http://localhost:5050/api/v1/tweet";
+>>>>>>> 66a8da562c72f88f0001ca243fee372784c35896
