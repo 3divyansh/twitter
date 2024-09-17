@@ -1,23 +1,24 @@
-import React, { useEffect } from 'react';
-import LeftSidebar from './LeftSidebar';
-import RightSidebar from './RightSidebar';
-import { Outlet } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { getUser } from '../redux/actionTypes';
-import useGetProfile from '../hooks/useGetProfile';
-import useOtherUser from '../hooks/useOtherUser';
+import React,{useEffect} from 'react'
+import LeftSidebar from './LeftSidebar'
+import RightSidebar from './RightSidebar'
+import { Outlet, useNavigate } from "react-router-dom";
+import useOtherUsers from '../hooks/useOtherUsers';
+import { useSelector } from "react-redux";
+import useGetMyTweets from '../hooks/useGetMyTweets';
+
 
 const Home = () => {
-  const dispatch = useDispatch();
-  const id = useSelector((state) => state.user.user); 
-  const { profile } = useGetProfile();
-  const { otherUsers } = useOtherUser();
+  const { user, otherUsers } = useSelector(store => store.user);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!profile && id) {
-      dispatch(getUser(id)); 
+  useEffect(()=>{
+    if (!user) {
+      navigate("/login");
     }
-  }, [id, dispatch, profile]);
+  },[]);
+  // custom Hook
+  useOtherUsers(user?._id);
+  useGetMyTweets(user?._id);
 
   return (
     <div className='flex justify-between w-[80%] mx-auto'>
@@ -25,7 +26,7 @@ const Home = () => {
       <Outlet />
       <RightSidebar otherUsers={otherUsers} />
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

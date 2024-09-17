@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from '../img/twitter-logo.avif'
+import Logo from "../img/twitter-logo.avif";
 import { GoHome } from "react-icons/go";
 import { IoSearchOutline } from "react-icons/io5";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -7,13 +7,35 @@ import { FaUserCircle } from "react-icons/fa";
 import { CiBookmark } from "react-icons/ci";
 import { IoMdLogOut } from "react-icons/io";
 import { FaFacebookMessenger } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link,useNavigate } from 'react-router-dom';
+import {useSelector,useDispatch} from "react-redux";
+import axios from "axios";
+import { USER_API_END_POINT } from '../utils/constant';
+import toast from "react-hot-toast"
+import { getMyProfile, getOtherUsers, getUser } from '../redux/userSlice';
+ 
+
 const LeftSidebar = () => {
-	const userId = useSelector((state) => state.user.user);
-  return (
+
+    const {user} = useSelector(store=>store.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const logoutHandler = async () => {
+        try {
+            const res = await axios.get(`${USER_API_END_POINT}/logout`);
+            dispatch(getUser(null));
+            dispatch(getOtherUsers(null));
+            dispatch(getMyProfile(null));
+            navigate('/login');
+            toast.success(res.data.message);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    return (
     <>
-    <div className='w-[20%]'>
+     <div className='w-[20%]'>
 	<div>
 		<div>
 			<img className='ml-1' width={"55px"} src={Logo} alt="Twitter Logo" />
@@ -45,12 +67,12 @@ const LeftSidebar = () => {
 			</div>
 
 
-			<Link to={`/profile/${userId?._id}`} className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
+			<Link to={`/profile/${user?._id}`} className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
 			<div><FaUserCircle size={"24px"}/></div>
 			<h1 className='font-bold text-lg ml-3'>Profile</h1>
 			</Link>
 
-			<div className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
+			<div onClick={logoutHandler} className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
 			<div><IoMdLogOut size={"24px"}/></div>
 			<h1 className='font-bold text-lg ml-3'>Logout</h1>
 			</div>
@@ -61,7 +83,7 @@ const LeftSidebar = () => {
 	</div>
    
     </>
-  )
+    )
 }
 
 export default LeftSidebar
